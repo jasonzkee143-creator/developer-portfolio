@@ -88,3 +88,27 @@ footer {
     color: #64748b;
     border-top: 1px solid #334155;
 }
+/* --- PREMIUM GLOW & TRANSITION ADJUSTMENTS --- */
+
+/* 1. Base card preparation */
+article, #skills div {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+}
+
+/* 2. Hover micro-interaction animation */
+article:hover, #skills div:hover {
+    transform: translateY(-5px); /* Smoothly lifts the card up */
+    border-color: var(--accent-color) !important; /* Highlights border to neon blue */
+    box-shadow: 0 12px 30px rgba(56, 189, 248, 0.15) !important; /* Casts a soft neon ambient glow */
+}
+
+/* 3. Button micro-interactions */
+nav a, article a {
+    transition: all 0.2s ease-in-out;
+}
+
+article a:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}

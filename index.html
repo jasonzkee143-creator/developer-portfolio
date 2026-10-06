@@ -41,28 +41,40 @@
     </section>
 
     <!-- 4. SKILLS SECTION -->
+        <!-- 4. TECHNICAL CAPABILITIES LAYER -->
     <section id="skills">
-        <h2>Technical Stack</h2>
-        <ul>
-            <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript, React</li>
-            <li><strong>Backend:</strong> Node.js, Express</li>
-            <li><strong>Database & Tools:</strong> PostgreSQL, MongoDB, Git</li>
-        </ul>
+        <h2>Core Technical Stack</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="background-color: var(--card-bg); padding: 1.2rem; border-radius: 6px; border: 1px solid #334155; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <h3 style="color: var(--accent-color); margin-top: 0; font-size: 1.1rem;">⚡ Frontend Engineering</h3>
+                <p style="margin: 0; font-size: 0.95rem; color: #94a3b8;">HTML5, CSS3, Modern JavaScript (ES6+), DOM Manipulation, Responsive Interface Architecture</p>
+            </div>
+            <div style="background-color: var(--card-bg); padding: 1.2rem; border-radius: 6px; border: 1px solid #334155; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <h3 style="color: var(--accent-color); margin-top: 0; font-size: 1.1rem;">⚙️ Backend Architecture</h3>
+                <p style="margin: 0; font-size: 0.95rem; color: #94a3b8;">Node.js, Express Framework, RESTful API Design, JSON Web Streams, Parameterized Routing</p>
+            </div>
+            <div style="background-color: var(--card-bg); padding: 1.2rem; border-radius: 6px; border: 1px solid #334155; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <h3 style="color: var(--accent-color); margin-top: 0; font-size: 1.1rem;">🗄️ Database & DevOps</h3>
+                <p style="margin: 0; font-size: 0.95rem; color: #94a3b8;">MongoDB Atlas (Cloud Cluster), Local Storage Formats, Git Version Control, GitHub Repositories</p>
+            </div>
+        </div>
     </section>
 
-    <!-- 5. PROJECTS SECTION -->
+    <!-- 5. ENGINEERED APPLICATION SHOWCASE -->
     <section id="projects">
-        <h2>Featured Projects</h2>
-        <!-- Project 1 -->
-        <article>
-            <h3>E-Commerce Backend API</h3>
-            <p>Built with Node.js and Express. Features user authentication, database querying, and secure payment processing routes.</p>
-            <p><em>Tech Stack: Node.js, Express, PostgreSQL</em></p>
-            <br>
-            <a href="converter.html" style="background-color: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; font-size: 0.9rem; font-weight: bold;">View Frontend Live Demo →</a>
-            <a href="auth.html" style="background-color: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; font-size: 0.9rem; font-weight: bold; margin-left: 1rem; display: inline-block;">View Secure Authentication Demo →</a>
-
+        <h2>Featured Applications Showcase</h2>
+        
+        <!-- Application 1 -->
+        <article style="background-color: var(--card-bg); padding: 2rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #334155; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
+            <h3 style="margin-top: 0; font-size: 1.4rem;">1. Full-Stack E-Commerce Core & API</h3>
+            <p style="color: #94a3b8; font-size: 1rem; line-height: 1.5;">An administrative API backend designed to process digital transaction states, dynamic query filtration, and client connection dispatches across secure gateways.</p>
+            <p style="font-size: 0.9rem; margin-bottom: 1.5rem;"><strong>Tech Stack:</strong> <span style="color: var(--accent-color);">Node.js, Express, PostgreSQL, Git</span></p>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="converter.html" style="background-color: var(--accent-color); color: #0f172a; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; font-size: 0.9rem; font-weight: bold; display: inline-block;">Launch Currency Converter Demo →</a>
+                <a href="auth.html" style="background-color: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; font-size: 0.9rem; font-weight: bold; display: inline-block;">Launch Identity Gate Demo →</a>
+            </div>
         </article>
+
         <!-- Project 2 -->
         <article>
             <h3>Dynamic Task Manager</h3>
