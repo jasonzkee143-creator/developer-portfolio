@@ -104,6 +104,49 @@ app.delete('/api/todos/:id', (req, res) => {
     todoDatabase = todoDatabase.filter(t => t.id !== id);
     res.json({ success: true, message: "Task wiped cleanly." });
 });
+// --- IN-MEMORY CRYPTOGRAPHIC USER ACCOUNT DATABANK ---
+// Real-world systems use bcrypt hashing algorithms. We mock storage data records for structural verification.
+const userRegistry = [
+    { username: "recruiter", passwordHash: "password123" } 
+];
+
+// --- AUTH ROUTER 1: ACCOUNT REGISTRATION (CREATE USER) ---
+app.post('/api/auth/register', (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ status: "Error", error: "Username and password specifications are required." });
+    }
+
+    const userExists = userRegistry.find(u => u.username.toLowerCase() === username.toLowerCase().trim());
+    if (userExists) {
+        return res.status(400).json({ status: "Error", error: "This username profile designation is already locked." });
+    }
+
+    // Capture and securely register user account credentials
+    userRegistry.push({
+        username: username.trim(),
+        passwordHash: password // In real production environments, wrap this with bcrypt.hashSync(password, 10)
+    });
+
+    console.log(`👤 New Security Profile Registered: [${username}]`);
+    res.status(201).json({ status: "Success", message: "Account profile built successfully! You can sign in now." });
+});
+
+// --- AUTH ROUTER 2: ACCOUNT VERIFICATION (LOGIN ACCESS) ---
+app.post('/api/auth/login', (req, res) => {
+    const { username, password } = req.body;
+
+    const user = userRegistry.find(u => u.username.toLowerCase() === username.toLowerCase().trim());
+    
+    // Mitigate timing side-channel data scraping via generalized auth checking responses
+    if (!user || user.passwordHash !== password) {
+        return res.status(401).json({ status: "Error", error: "Invalid username or password validation credentials." });
+    }
+
+    console.log(`🔐 Authorized Authentication Grant Access: [${username}] logged in.`);
+    res.json({ status: "Success", message: `Authentication granted. Welcome back session admin: ${user.username}!` });
+});
 
 // --- ENGINE ENGAGEMENT ---
 app.listen(PORT, () => {

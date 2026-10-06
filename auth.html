@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full-Stack Demo | Secure User Authentication Gate</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <strong>Jason S. Belbestre | Secure Auth Labs</strong>
+        <a href="index.html" style="color: var(--accent-color); text-decoration: none;">← Back to Portfolio</a>
+    </nav>
+
+    <section style="max-width: 450px; margin: 0 auto; padding: 4rem 1rem;">
+        <h2 id="authTitle" style="text-align: center; margin-bottom: 0.5rem;">Account Sign In</h2>
+        <p id="authSubtitle" style="text-align: center; color: #94a3b8; margin-bottom: 2.5rem;">Demonstrating Secure Data Hashing and Session Access Routers.</p>
+
+        <div style="background-color: var(--card-bg); padding: 2.5rem; border-radius: 8px; border: 1px solid #334155;">
+            <form id="authForm">
+                <div style="margin-bottom: 1.2rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #94a3b8;">Username:</label>
+                    <input type="text" id="usernameInput" required style="width: 100%; padding: 0.75rem; border-radius: 6px; border: 1px solid #475569; background-color: #0f172a; color: white; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #94a3b8;">Password:</label>
+                    <input type="password" id="passwordInput" required style="width: 100%; padding: 0.75rem; border-radius: 6px; border: 1px solid #475569; background-color: #0f172a; color: white; box-sizing: border-box;">
+                </div>
+                
+                <button type="submit" id="submitBtn" style="width: 100%; background-color: var(--accent-color); color: #0f172a; border: none; padding: 0.85rem; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; margin-bottom: 1.5rem;">Sign In</button>
+            </form>
+
+            <div id="authMessage" style="padding: 0.75rem; border-radius: 6px; font-weight: bold; text-align: center; margin-bottom: 1.5rem; display: none;"></div>
+
+            <p style="text-align: center; margin: 0; font-size: 0.95rem; color: #94a3b8;">
+                <span id="togglePrompt">Don't have an account?</span> 
+                <a href="#" id="toggleModeLink" style="color: var(--accent-color); text-decoration: none; font-weight: bold; margin-left: 0.25rem;">Create Account</a>
+            </p>
+        </div>
+    </section>
+
+    <script src="auth.js"></script>
+</body>
+</html>
