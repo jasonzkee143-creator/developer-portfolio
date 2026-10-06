@@ -62,6 +62,48 @@ app.post('/api/contact', async (req, res) => {
         res.status(500).json({ status: "Error", error: "Cloud database transaction failed." });
     }
 });
+// --- IN-MEMORY CRUD DATABASE ARRAY STACK ---
+let todoDatabase = [
+    { id: "1", text: "Configure full-stack framework workspace environment", completed: true },
+    { id: "2", text: "Link responsive portfolio structure up to GitHub cloud", completed: true },
+    { id: "3", text: "Build dynamic database record handling routing arrays", completed: false }
+];
+
+// --- CRUD ROUTE 1: GET ALL TASKS (READ) ---
+app.get('/api/todos', (req, res) => {
+    res.json(todoDatabase);
+});
+
+// --- CRUD ROUTE 2: ADD A NEW TASK (CREATE) ---
+app.post('/api/todos', (req, res) => {
+    const { text } = req.body;
+    if (!text) return res.status(400).json({ error: "Task content required." });
+
+    const newTodo = {
+        id: Date.now().toString(),
+        text: text.trim(),
+        completed: false
+    };
+    todoDatabase.push(newTodo);
+    res.status(201).json(newTodo);
+});
+
+// --- CRUD ROUTE 3: TOGGLE TASK STATUS (UPDATE) ---
+app.put('/api/todos/:id', (req, res) => {
+    const { id } = req.params;
+    const todo = todoDatabase.find(t => t.id === id);
+    if (!todo) return res.status(404).json({ error: "Task not found." });
+
+    todo.completed = !todo.completed; 
+    res.json(todo);
+});
+
+// --- CRUD ROUTE 4: ERASE TASK RECORD (DELETE) ---
+app.delete('/api/todos/:id', (req, res) => {
+    const { id } = req.params;
+    todoDatabase = todoDatabase.filter(t => t.id !== id);
+    res.json({ success: true, message: "Task wiped cleanly." });
+});
 
 // --- ENGINE ENGAGEMENT ---
 app.listen(PORT, () => {
