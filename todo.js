@@ -1,3 +1,5 @@
+const BACKEND_URL = "https://onrender.com";
+
 document.addEventListener('DOMContentLoaded', () => {
     const todoForm = document.getElementById('todoForm');
     const taskInput = document.getElementById('taskInput');
@@ -6,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. READ: Fetch and display all active tasks from the backend database server
     function loadTasks() {
-        fetch('/api/todos')
+        fetch(`${BACKEND_URL}/api/todos`)
             .then(res => res.json())
             .then(tasks => {
                 loadingText.style.display = 'none';
@@ -21,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const li = document.createElement('li');
                     li.style.cssText = "background-color: var(--card-bg); padding: 1rem 1.5rem; border-radius: 6px; border: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; gap: 1rem;";
                     
-                    // Render styling dynamically depending on whether task is complete
                     const textDecoration = task.completed ? 'line-through' : 'none';
                     const textColor = task.completed ? '#64748b' : 'white';
 
@@ -33,6 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                     taskList.appendChild(li);
                 });
+            })
+            .catch(err => {
+                console.error("Task read error:", err);
+                loadingText.innerText = "⚠️ Unable to stream cloud database registers.";
             });
     }
 
@@ -41,32 +46,31 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const text = taskInput.value.trim();
 
-        fetch('/api/todos', {
+        fetch(`${BACKEND_URL}/api/todos`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text })
         })
         .then(res => res.json())
         .then(() => {
-            taskInput.value = ''; // Clean input element box
-            loadTasks(); // Refresh client display grid list records
+            taskInput.value = ''; 
+            loadTasks(); 
         });
     });
 
     // 3. UPDATE: Toggle task completion status record
     window.toggleTask = function(id) {
-        fetch(`/api/todos/${id}`, { method: 'PUT' })
+        fetch(`${BACKEND_URL}/api/todos/${id}`, { method: 'PUT' })
             .then(res => res.json())
             .then(() => loadTasks());
     };
 
     // 4. DELETE: Erase task profile entirely from backend array registry
     window.deleteTask = function(id) {
-        fetch(`/api/todos/${id}`, { method: 'DELETE' })
+        fetch(`${BACKEND_URL}/api/todos/${id}`, { method: 'DELETE' })
             .then(res => res.json())
             .then(() => loadTasks());
     };
 
-    // Initialize list synchronization on mount setup lifecycle
     loadTasks();
 });
