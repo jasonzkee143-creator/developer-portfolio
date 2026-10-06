@@ -62,90 +62,95 @@ app.post('/api/contact', async (req, res) => {
         res.status(500).json({ status: "Error", error: "Cloud database transaction failed." });
     }
 });
-// --- IN-MEMORY CRUD DATABASE ARRAY STACK ---
-let todoDatabase = [
-    { id: "1", text: "Configure full-stack framework workspace environment", completed: true },
-    { id: "2", text: "Link responsive portfolio structure up to GitHub cloud", completed: true },
-    { id: "3", text: "Build dynamic database record handling routing arrays", completed: false }
-];
-
-// --- CRUD ROUTE 1: GET ALL TASKS (READ) ---
-app.get('/api/todos', (req, res) => {
-    res.json(todoDatabase);
+// --- DATA ACCESS LAYER: MONGODB TODO SCHEMA BLUEPRINT ---
+const todoSchema = new mongoose.Schema({
+    text: { type: String, required: true },
+    completed: { type: Boolean, default: false },
+    timestamp: { type: Date, default: Date.now }
 });
 
-// --- CRUD ROUTE 2: ADD A NEW TASK (CREATE) ---
-app.post('/api/todos', (req, res) => {
+// Compile the task blueprint model
+const Todo = mongoose.model('Todo', todoSchema);
+
+
+// --- UPGRADED CRUD ROUTE 1: GET ALL TASKS (READ From Cloud) ---
+app.get('/api/todos', async (req, res) => {
+    try {
+        // Query the live database to find all tasks, sorting them newest first
+        const tasks = await Todo.find().sort({ timestamp: -1 });
+        
+        // Convert MongoDB's internal '_id' to standard 'id' format so your frontend matches perfectly
+        const formattedTasks = tasks.map(task => ({
+            id: task._id.toString(),
+            text: task.text,
+            completed: task.completed
+        }));
+        
+        res.json(formattedTasks);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to fetch cloud task registers." });
+    }
+});
+
+
+// --- UPGRADED CRUD ROUTE 2: ADD A NEW TASK (CREATE In Cloud) ---
+app.post('/api/todos', async (req, res) => {
     const { text } = req.body;
     if (!text) return res.status(400).json({ error: "Task content required." });
 
-    const newTodo = {
-        id: Date.now().toString(),
-        text: text.trim(),
-        completed: false
-    };
-    todoDatabase.push(newTodo);
-    res.status(201).json(newTodo);
+    try {
+        const newCloudTodo = new Todo({
+            text: text.trim(),
+            completed: false
+        });
+
+        await newCloudTodo.save(); // Streams record straight into your cloud cluster collection table
+        
+        res.status(201).json({
+            id: newCloudTodo._id.toString(),
+            text: newCloudTodo.text,
+            completed: newCloudTodo.completed
+        });
+    } catch (err) {
+        res.status(500).json({ error: "Cloud task database insertion failed." });
+    }
 });
 
-// --- CRUD ROUTE 3: TOGGLE TASK STATUS (UPDATE) ---
-app.put('/api/todos/:id', (req, res) => {
+
+// --- UPGRADED CRUD ROUTE 3: TOGGLE TASK STATUS (UPDATE In Cloud) ---
+app.put('/api/todos/:id', async (req, res) => {
     const { id } = req.params;
-    const todo = todoDatabase.find(t => t.id === id);
-    if (!todo) return res.status(404).json({ error: "Task not found." });
 
-    todo.completed = !todo.completed; 
-    res.json(todo);
+    try {
+        const todo = await Todo.findById(id);
+        if (!todo) return res.status(404).json({ error: "Task profile not found in cloud." });
+
+        todo.completed = !todo.completed; // Flip task check box track switch state
+        await todo.save(); // Save modification back up onto cloud disks
+
+        res.json({
+            id: todo._id.toString(),
+            text: todo.text,
+            completed: todo.completed
+        });
+    } catch (err) {
+        res.status(500).json({ error: "Cloud task database update transaction failed." });
+    }
 });
 
-// --- CRUD ROUTE 4: ERASE TASK RECORD (DELETE) ---
-app.delete('/api/todos/:id', (req, res) => {
+
+// --- UPGRADED CRUD ROUTE 4: ERASE TASK RECORD (DELETE From Cloud) ---
+app.delete('/api/todos/:id', async (req, res) => {
     const { id } = req.params;
-    todoDatabase = todoDatabase.filter(t => t.id !== id);
-    res.json({ success: true, message: "Task wiped cleanly." });
-});
-// --- IN-MEMORY CRYPTOGRAPHIC USER ACCOUNT DATABANK ---
-// Real-world systems use bcrypt hashing algorithms. We mock storage data records for structural verification.
-const userRegistry = [
-    { username: "recruiter", passwordHash: "password123" } 
-];
 
-// --- AUTH ROUTER 1: ACCOUNT REGISTRATION (CREATE USER) ---
-app.post('/api/auth/register', (req, res) => {
-    const { username, password } = req.body;
+    try {
+        const result = await Todo.findByIdAndDelete(id);
+        if (!result) return res.status(404).json({ error: "Task record does not exist." });
 
-    if (!username || !password) {
-        return res.status(400).json({ status: "Error", error: "Username and password specifications are required." });
+        res.json({ success: true, message: "Task wiped cleanly from global cloud databank storage tables." });
+    } catch (err) {
+        res.status(500).json({ error: "Cloud task database deletion transaction failed." });
     }
-
-    const userExists = userRegistry.find(u => u.username.toLowerCase() === username.toLowerCase().trim());
-    if (userExists) {
-        return res.status(400).json({ status: "Error", error: "This username profile designation is already locked." });
-    }
-
-    // Capture and securely register user account credentials
-    userRegistry.push({
-        username: username.trim(),
-        passwordHash: password // In real production environments, wrap this with bcrypt.hashSync(password, 10)
-    });
-
-    console.log(`👤 New Security Profile Registered: [${username}]`);
-    res.status(201).json({ status: "Success", message: "Account profile built successfully! You can sign in now." });
-});
-
-// --- AUTH ROUTER 2: ACCOUNT VERIFICATION (LOGIN ACCESS) ---
-app.post('/api/auth/login', (req, res) => {
-    const { username, password } = req.body;
-
-    const user = userRegistry.find(u => u.username.toLowerCase() === username.toLowerCase().trim());
-    
-    // Mitigate timing side-channel data scraping via generalized auth checking responses
-    if (!user || user.passwordHash !== password) {
-        return res.status(401).json({ status: "Error", error: "Invalid username or password validation credentials." });
-    }
-
-    console.log(`🔐 Authorized Authentication Grant Access: [${username}] logged in.`);
-    res.json({ status: "Success", message: `Authentication granted. Welcome back session admin: ${user.username}!` });
 });
 
 // --- ENGINE ENGAGEMENT ---
