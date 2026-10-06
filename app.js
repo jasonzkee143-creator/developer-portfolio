@@ -60,3 +60,36 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+    // --- LIVE DEMO APPLICATION SANDBOX CONTROLLER ---
+const sandboxInput = document.getElementById('sandboxInput');
+const sandboxRunBtn = document.getElementById('sandboxRunBtn');
+const sandboxConsoleOutput = document.getElementById('sandboxConsoleOutput');
+
+if (sandboxRunBtn && sandboxInput && sandboxConsoleOutput) {
+    sandboxRunBtn.addEventListener('click', () => {
+        const userText = sandboxInput.value.trim();
+        
+        if (!userText) {
+            sandboxConsoleOutput.innerText = "❌ System Halt: Input string specification array cannot be empty.";
+            sandboxConsoleOutput.style.color = "#ef4444";
+            return;
+        }
+
+        sandboxConsoleOutput.style.color = "#38bdf8";
+        sandboxConsoleOutput.innerText = "⚡ Compiling... Parsing indices... Hashing streams...";
+
+        // Simulate high-speed pipeline compiling processing loops
+        setTimeout(() => {
+            const mockHash = btoa(userText).substring(0, 12).toUpperCase();
+            const timestampCode = new Date().toLocaleTimeString();
+            
+            sandboxConsoleOutput.style.color = "#22c55e";
+            sandboxConsoleOutput.innerHTML = `
+                <div>🚀 [SUCCESS] Compilation payload complete.</div>
+                <div style="margin-top: 0.25rem; color: #cbd5e1;">↳ Raw Data: "${userText}"</div>
+                <div style="margin-top: 0.25rem; color: #eab308;">↳ Secure Hash ID: SHA-${mockHash}</div>
+                <div style="margin-top: 0.25rem; color: #64748b;">↳ Registry Time: ${timestampCode}</div>
+            `;
+        }, 600); // 600ms micro-loading effect for an authentic developer feel
+    });
+}
