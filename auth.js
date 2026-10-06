@@ -1,3 +1,5 @@
+const BACKEND_URL = "https://onrender.com";
+
 document.addEventListener('DOMContentLoaded', () => {
     const authForm = document.getElementById('authForm');
     const usernameInput = document.getElementById('usernameInput');
@@ -42,7 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
         authMessage.style.backgroundColor = "rgba(255,255,255,0.05)";
         authMessage.style.color = "white";
 
-        fetch(targetRoute, {
+        // CONNECT FRONTEND TO YOUR LIVE RENDER BACKEND CLOUD URL
+        fetch(`${BACKEND_URL}${targetRoute}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
@@ -62,7 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(() => {
             authMessage.innerText = "❌ Secure auth proxy connection timed out.";
+            authMessage.style.backgroundColor = "rgba(239, 68, 68, 0.1)";
             authMessage.style.color = "#ef4444";
         });
     });
 });
+
