@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jason S. Belbestre | Junior Full-Stack Developer Portfolio</title>
+     <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. NAVIGATION BAR -->
+    <header>
+        <nav>
+            <strong>Jason S. Belbestre</strong>
+            <ul>
+                <li><a href="#hero">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 2. SYSTEM SYNC NOTIFICATION BANNER -->
+    <div id="backend-banner" style="background-color: rgba(56, 189, 248, 0.1); border: 1px solid var(--accent-color); padding: 1rem; border-radius: 6px; margin: 2rem auto; max-width: 1000px; color: var(--accent-color); text-align: center; font-weight: 500;">
+        Connecting to backend server...
+    </div>
+
+    <!-- 3. HERO / INTRODUCTION SECTION -->
+    <section id="hero" style="display: flex; align-items: center; justify-content: space-between; gap: 3rem; padding: 4rem 0; max-width: 1000px; margin: 0 auto; flex-wrap: wrap-reverse;">
+        <!-- Left Column: Text Introductions -->
+        <div style="flex: 1; min-width: 300px; text-align: left;">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem; line-height: 1.2;">Hi, I'm Jason S. Belbestre 👋</h1>
+            <p style="font-size: 1.2rem; color: #94a3b8; margin-bottom: 2rem;">I build robust web applications from database architecture to smooth frontend user experiences.</p>
+            <a href="#contact" style="background-color: var(--accent-color); color: #0f172a; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;">Let's Connect</a>
+        </div>
+        <!-- Right Column: Profile Picture Container -->
+        <div style="flex: 1; min-width: 250px; display: flex; justify-content: center;">
+            <img src="formal_photo.jpg" alt="Jason S. Belbestre Profile" style="width: 280px; height: 280px; object-fit: cover; border-radius: 50%; border: 4px solid var(--accent-color); box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2);">
+        </div>
+    </section>
+
+    <!-- 4. SKILLS SECTION -->
+    <section id="skills">
+        <h2>Technical Stack</h2>
+        <ul>
+            <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript, React</li>
+            <li><strong>Backend:</strong> Node.js, Express</li>
+            <li><strong>Database & Tools:</strong> PostgreSQL, MongoDB, Git</li>
+        </ul>
+    </section>
+
+    <!-- 5. PROJECTS SECTION -->
+    <section id="projects">
+        <h2>Featured Projects</h2>
+        <!-- Project 1 -->
+        <article>
+            <h3>E-Commerce Backend API</h3>
+            <p>Built with Node.js and Express. Features user authentication, database querying, and secure payment processing routes.</p>
+            <p><em>Tech Stack: Node.js, Express, PostgreSQL</em></p>
+            <br>
+            <a href="converter.html" style="background-color: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; font-size: 0.9rem; font-weight: bold;">View Frontend Live Demo →</a>
+        </article>
+        <!-- Project 2 -->
+        <article>
+            <h3>Dynamic Task Manager</h3>
+            <p>A full-stack CRUD application allowing users to track real-time project tasks, manage due dates, and filter by priority.</p>
+            <p><em>Tech Stack: React, Node.js, MongoDB</em></p>
+        </article>
+    </section>
+
+    <!-- 6. CONTACT SECTION -->
+    <section id="contact">
+        <h2>Get In Touch</h2>
+        <p>I am actively seeking Junior Full-Stack Developer opportunities!</p>
+        <div style="background-color: var(--card-bg); padding: 2rem; border-radius: 8px; border: 1px solid #334155; margin-top: 2rem;">
+            <form id="portfolioForm">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #94a3b8;">Your Name:</label>
+                    <input type="text" id="formName" required style="width: 100%; padding: 0.75rem; border-radius: 6px; border: 1px solid #475569; background-color: #0f172a; color: white; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #94a3b8;">Your Email:</label>
+                    <input type="email" id="formEmail" required style="width: 100%; padding: 0.75rem; border-radius: 6px; border: 1px solid #475569; background-color: #0f172a; color: white; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #94a3b8;">Your Message:</label>
+                    <textarea id="formMessage" rows="4" required style="width: 100%; padding: 0.75rem; border-radius: 6px; border: 1px solid #475569; background-color: #0f172a; color: white; box-sizing: border-box; resize: vertical;"></textarea>
+                </div>
+                <button type="submit" style="background-color: var(--accent-color); color: #0f172a; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: bold; cursor: pointer;">Send Message</button>
+            </form>
+            <div id="formStatus" style="margin-top: 1rem; font-weight: bold; display: none;"></div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Jason S. Belbestre. All Rights Reserved.</p>
+    </footer>
+
+    <!-- LINK THE INTERACTIVE LOGIC AT THE VERY END -->
+    <script src="app.js"></script>
+Use code with caution.
+</body>
+</html>
