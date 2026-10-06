@@ -1,3 +1,6 @@
+const cors = require('cors');
+app.use(cors());
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -92,6 +95,32 @@ app.get('/api/todos', async (req, res) => {
     }
 });
 
+// --- DYNAMIC CONTACT DATABASE ROUTE FOR PORTFOLIO FORM ---
+const messageSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    message: String,
+    date: { type: Date, default: Date.now }
+});
+const Message = mongoose.model('Message', messageSchema);
+
+app.post('/api/contact', async (req, res) => {
+    try {
+        const { name, email, message } = req.body;
+        
+        if (!name || !email || !message) {
+            return res.status(400).json({ status: "Error", error: "All form fields are strictly required." });
+        }
+
+        const newContactMessage = new Message({ name, email, message });
+        await newContactMessage.save(); // Streams record data straight into MongoDB cloud cluster rows
+
+        res.status(201).json({ status: "Success", message: "Your encrypted message was delivered successfully!" });
+    } catch (err) {
+        console.error("Database tracking error:", err);
+        res.status(500).json({ status: "Error", error: "Internal server data persistence failure." });
+    }
+});
 
 // --- UPGRADED CRUD ROUTE 2: ADD A NEW TASK (CREATE In Cloud) ---
 app.post('/api/todos', async (req, res) => {
